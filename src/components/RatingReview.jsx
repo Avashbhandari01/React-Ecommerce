@@ -1,4 +1,4 @@
-function RatingReview({ rating }) {
+function RatingReview({ rating, count }) {
   const stars = [1, 2, 3, 4, 5];
 
   return (
@@ -15,7 +15,7 @@ function RatingReview({ rating }) {
           ★
         </span>
       ))}
-      <span className="pl-5">120 reviews</span>
+      <span className="pl-5">{count} reviews</span>
     </div>
   );
 }
