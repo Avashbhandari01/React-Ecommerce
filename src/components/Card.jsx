@@ -2,14 +2,37 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import RatingReview from "./RatingReview";
 
-function Card() {
+function Card({ category }) {
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [isProductLoaded, setIsProductLoaded] = useState(false);
 
   useEffect(() => {
+    if (category) {
+      fetchProductsByCategory(category);
+    } else {
+      axios
+        .get("https://fakestoreapi.com/products")
+        .then((response) => {
+          const convertRating = response.data.map((product) => ({
+            ...product,
+            rating: {
+              rate: Math.round(product.rating.rate),
+              count: product.rating.count,
+            },
+          }));
+          setProducts(convertRating);
+          setVisibleProducts(convertRating.slice(0, 12));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [category]);
+
+  const fetchProductsByCategory = (category) => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get(`https://fakestoreapi.com/products/category/${category}`)
       .then((response) => {
         const convertRating = response.data.map((product) => ({
           ...product,
@@ -24,7 +47,7 @@ function Card() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
 
   const loadMoreProducts = () => {
     setVisibleProducts(products);
