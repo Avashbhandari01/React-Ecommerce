@@ -1,11 +1,26 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Dropdown() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products/categories")
+      .then((response) => {
+        setItems(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -20,63 +35,24 @@ export default function Dropdown() {
 
       <MenuItems
         transition
-        className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none"
       >
         <div className="py-1">
-          <MenuItem>
-            {({ focus }) => (
-              <a
-                href="#"
-                className={classNames(
-                  focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                  "block px-4 py-2 text-sm"
-                )}
-              >
-                Electronics
-              </a>
-            )}
-          </MenuItem>
-          <MenuItem>
-            {({ focus }) => (
-              <a
-                href="#"
-                className={classNames(
-                  focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                  "block px-4 py-2 text-sm"
-                )}
-              >
-                Jewelery
-              </a>
-            )}
-          </MenuItem>
-          <MenuItem>
-            {({ focus }) => (
-              <a
-                href="#"
-                className={classNames(
-                  focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                  "block px-4 py-2 text-sm"
-                )}
-              >
-                Men's Clothing
-              </a>
-            )}
-          </MenuItem>
-          <form method="POST" action="#">
-            <MenuItem>
-              {({ focus }) => (
-                <button
-                  type="submit"
+          {items.map((item) => (
+            <MenuItem key={item}>
+              {({ active }) => (
+                <a
+                  href={`#${item}`}
                   className={classNames(
-                    focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full px-4 py-2 text-left text-sm"
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
                   )}
                 >
-                  Women's Clothing
-                </button>
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </a>
               )}
             </MenuItem>
-          </form>
+          ))}
         </div>
       </MenuItems>
     </Menu>
