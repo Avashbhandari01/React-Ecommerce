@@ -4,7 +4,9 @@ function Cart() {
   return (
     <>
       <Navbar />
-      <div>Cart Page</div>
+      <div className="w-full flex items-center justify-center mt-10">
+        <div>Cart Page</div>
+      </div>
     </>
   );
 }
