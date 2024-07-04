@@ -56,7 +56,7 @@ function Card({ category }) {
 
   return (
     <>
-      <div className="flex flex-wrap gap-10 justify-between">
+      <div className="flex flex-wrap gap-[5.5rem] justify-normal">
         {visibleProducts.map((product) => (
           <div
             className="bg-white-300 w-[20%] h-[26rem] rounded-xl border border-stone-300 flex flex-col justify-between"
@@ -86,7 +86,7 @@ function Card({ category }) {
         ))}
       </div>
       <div className="w-full">
-        {!isProductLoaded && (
+        {!isProductLoaded && products.length > 12 && (
           <div className="flex justify-center">
             <button
               onClick={loadMoreProducts}
