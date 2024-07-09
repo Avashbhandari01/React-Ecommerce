@@ -15,7 +15,7 @@ function RatingReview({ rating, count }) {
           ★
         </span>
       ))}
-      <span className="pl-5">{count} reviews</span>
+      <span className="pl-5 text-[#7e7e7e]">{count} reviews</span>
     </div>
   );
 }
