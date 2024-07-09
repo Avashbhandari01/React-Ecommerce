@@ -54,6 +54,10 @@ function Card({ category }) {
     setIsProductLoaded(true);
   };
 
+  // const handleCart = () => {
+
+  // }
+
   return (
     <>
       <div className="flex flex-wrap gap-[5.5rem] justify-normal">
@@ -78,7 +82,10 @@ function Card({ category }) {
                 rating={product.rating.rate}
                 count={product.rating.count}
               />
-              <button className="bg-[#4a596a] text-white rounded h-10 w-full mt-2 self-start">
+              <button
+                className="bg-[#4a596a] text-white rounded h-10 w-full mt-2 self-start"
+                // onClick={handleCart}
+              >
                 Add to Cart
               </button>
             </div>

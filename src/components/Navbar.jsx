@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUserLarge } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    logout();
+    navigate("/");
   };
 
   return (

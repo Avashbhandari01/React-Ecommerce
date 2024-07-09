@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { Toaster, toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -9,6 +10,8 @@ function Login() {
     username: "",
     password: "",
   });
+
+  const { login } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -38,9 +41,8 @@ function Login() {
         password: credentials.password,
       })
       .then((response) => {
-        toast.success("Logged in successfully!");
         setCredentials({ username: "", password: "" });
-        localStorage.setItem("token", JSON.stringify(response.data));
+        login(JSON.stringify(response.data));
         navigate("/");
       })
       .catch((error) => {
